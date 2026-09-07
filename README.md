@@ -1,96 +1,115 @@
 <div align="center">
+  <h1>🏗️ SQL Server Data Warehouse Project</h1>
+  <p><strong>Building a modern data warehouse using SQL Server and Medallion Architecture</strong></p>
 
-🏗️ SQL Server Data Warehouse Project
-
-Building a modern data warehouse with SQL Server and Medallion Architecture
-
-
-
-
-
+  <p>
+    <img src="https://img.shields.io/badge/SQL%20Server-Data%20Warehouse-red?style=flat-square" alt="SQL Server">
+    <img src="https://img.shields.io/badge/T--SQL-ETL-blue?style=flat-square" alt="T-SQL">
+    <img src="https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square" alt="Status">
+  </p>
 </div>
 
-📌 Project Overview
+<hr>
 
-This project demonstrates the development of a modern Data Warehouse using SQL Server. Data is collected from CRM systems and flat files, then processed through the Bronze, Silver, and Gold layers to produce clean and business-ready data.
+<h2>📌 Project Overview</h2>
 
-Objective
+<p>
+  This project demonstrates the development of a modern <strong>Data Warehouse using SQL Server</strong>.
+  It collects data from CRM systems and flat files, then processes it through the
+  <strong>Bronze, Silver, and Gold layers</strong> to produce clean and business-ready data.
+</p>
 
-Combine data from multiple sources.
+<h3>Objective</h3>
 
-Clean and standardize raw data.
+<ul>
+  <li>Combine data from multiple source systems.</li>
+  <li>Clean and standardize raw data.</li>
+  <li>Build fact and dimension tables using a star schema.</li>
+  <li>Prepare reliable data for reporting and analytics.</li>
+</ul>
 
-Build an analytical model using fact and dimension tables.
+<hr>
 
-Prepare reliable data for reporting and business analysis.
+<h2>🏛️ Data Architecture</h2>
 
-🏛️ Data Architecture
+<p>The project follows the <strong>Medallion Architecture</strong>:</p>
 
-The project follows the Medallion Architecture:
+<p align="center">
+  <strong>CRM &amp; Files</strong> ➜ 🥉 <strong>Bronze</strong> ➜ 🥈 <strong>Silver</strong> ➜ 🥇 <strong>Gold</strong> ➜ 📊 <strong>Reports</strong>
+</p>
 
-flowchart LR
-    A["CRM & Files"] --> B["🥉 Bronze"]
-    B --> C["🥈 Silver"]
-    C --> D["🥇 Gold"]
-    D --> E["📊 Reports"]
+<table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🥉 <strong>Bronze</strong></td>
+      <td>Stores raw data exactly as received from the sources.</td>
+    </tr>
+    <tr>
+      <td>🥈 <strong>Silver</strong></td>
+      <td>Cleans, standardizes, integrates, and validates the data.</td>
+    </tr>
+    <tr>
+      <td>🥇 <strong>Gold</strong></td>
+      <td>Creates fact and dimension tables for business analytics.</td>
+    </tr>
+  </tbody>
+</table>
 
-Layer
+<hr>
 
-Purpose
+<h2>⚙️ Project Workflow</h2>
 
-🥉 Bronze
+<ol>
+  <li><strong>Data Extraction:</strong> Extract data from CRM systems and files.</li>
+  <li><strong>Data Loading:</strong> Load raw data into the Bronze layer.</li>
+  <li><strong>Data Cleansing:</strong> Fix duplicates, missing values, and formatting issues.</li>
+  <li><strong>Data Transformation:</strong> Apply business rules and integrate the data.</li>
+  <li><strong>Data Modeling:</strong> Build a star schema in the Gold layer.</li>
+  <li><strong>Data Validation:</strong> Verify data quality and correctness.</li>
+</ol>
 
-Stores raw data exactly as received from the sources.
+<hr>
 
-🥈 Silver
+<h2>🛠️ Technologies Used</h2>
 
-Cleans, standardizes, and validates the data.
+<ul>
+  <li><strong>SQL Server</strong> — Database and data warehouse</li>
+  <li><strong>T-SQL</strong> — ETL and transformation logic</li>
+  <li><strong>SSMS</strong> — Database development and management</li>
+  <li><strong>Git &amp; GitHub</strong> — Version control and documentation</li>
+  <li><strong>Draw.io</strong> — Architecture and data-model diagrams</li>
+</ul>
 
-🥇 Gold
+<hr>
 
-Creates fact and dimension tables for analytics.
+<h2>📊 Analytics &amp; Reporting</h2>
 
-⚙️ Project Workflow
+<p>The Gold layer prepares the data to analyze:</p>
 
-Data Extraction — Extract data from CRM systems and files.
+<ul>
+  <li>Customer behavior</li>
+  <li>Product performance</li>
+  <li>Sales trends</li>
+  <li>Key business metrics</li>
+</ul>
 
-Data Loading — Load the raw data into the Bronze layer.
+<p>
+  The final model can be connected to <strong>Power BI</strong> or other reporting tools
+  to support data-driven decision-making.
+</p>
 
-Data Cleansing — Fix missing values, duplicates, and formatting issues.
+<hr>
 
-Data Transformation — Apply business rules and integrate the data.
+<h2>🌟 About Me</h2>
 
-Data Modeling — Build a star schema in the Gold layer.
-
-Data Validation — Check data quality and correctness.
-
-🛠️ Technologies Used
-
-SQL Server — Database and data warehouse
-
-T-SQL — ETL and transformation logic
-
-SSMS — Database development and management
-
-Git & GitHub — Version control and documentation
-
-Draw.io — Architecture and data-model diagrams
-
-📊 Analytics & Reporting
-
-The Gold layer prepares the data for analyzing:
-
-Customer behavior
-
-Product performance
-
-Sales trends
-
-Key business metrics
-
-The final model can be connected to Power BI or other reporting tools to support data-driven decision-making.
-
-🌟 About Me
-
-Hi! I'm Yousef Awwad, a developer interested in data engineering, SQL, and building practical software projects. This project is part of my journey to strengthen my skills in data warehousing and analytics.
-
+<p>
+  Hi! I'm <strong>Yousef Awwad</strong>, a developer interested in data engineering,
+  SQL, and building practical software projects. This project is part of my journey
+  to strengthen my skills in data warehousing and analytics.
+</p>
