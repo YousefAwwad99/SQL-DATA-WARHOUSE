@@ -1,71 +1,96 @@
-🏗️ SQL Server Data Warehouse
+<div align="center">
 
-📌 About the Project
+🏗️ SQL Server Data Warehouse Project
 
-This project builds a modern Data Warehouse using SQL Server. It integrates data from CRM systems and flat files, then cleans and transforms it into analytics-ready data using the Medallion Architecture.
+Building a modern data warehouse with SQL Server and Medallion Architecture
 
-🏛️ Architecture
 
-Data Sources ➜ Bronze Layer ➜ Silver Layer ➜ Gold Layer ➜ Reports
 
-🥉 Bronze Layer
 
-Stores raw data from source systems.
 
-Uses full or incremental loading.
+</div>
 
-Keeps the original data for auditing.
+📌 Project Overview
 
-🥈 Silver Layer
+This project demonstrates the development of a modern Data Warehouse using SQL Server. Data is collected from CRM systems and flat files, then processed through the Bronze, Silver, and Gold layers to produce clean and business-ready data.
 
-Cleans and standardizes the data.
+Objective
 
-Removes duplicates and handles missing values.
+Combine data from multiple sources.
 
-Applies business rules and data-quality checks.
+Clean and standardize raw data.
 
-🥇 Gold Layer
+Build an analytical model using fact and dimension tables.
 
-Creates fact and dimension tables.
+Prepare reliable data for reporting and business analysis.
 
-Uses a star-schema model.
+🏛️ Data Architecture
 
-Prepares data for reporting and analysis.
+The project follows the Medallion Architecture:
 
-⚙️ ETL Process
+flowchart LR
+    A["CRM & Files"] --> B["🥉 Bronze"]
+    B --> C["🥈 Silver"]
+    C --> D["🥇 Gold"]
+    D --> E["📊 Reports"]
 
-📥 Extract data from CRM systems and files.
+Layer
 
-🥉 Load raw data into the Bronze layer.
+Purpose
 
-🧹 Clean and transform data in the Silver layer.
+🥉 Bronze
 
-⭐ Build analytical models in the Gold layer.
+Stores raw data exactly as received from the sources.
 
-✅ Validate data quality and correctness.
+🥈 Silver
 
-🛠️ Technologies
+Cleans, standardizes, and validates the data.
 
-SQL Server
+🥇 Gold
 
-T-SQL
+Creates fact and dimension tables for analytics.
 
-SQL Server Management Studio (SSMS)
+⚙️ Project Workflow
 
-Git & GitHub
+Data Extraction — Extract data from CRM systems and files.
 
-Draw.io
+Data Loading — Load the raw data into the Bronze layer.
 
-🎯 Project Goals
+Data Cleansing — Fix missing values, duplicates, and formatting issues.
 
-Build a structured and scalable data warehouse.
+Data Transformation — Apply business rules and integrate the data.
 
-Improve data quality and consistency.
+Data Modeling — Build a star schema in the Gold layer.
 
-Create business-ready data for reports and dashboards.
+Data Validation — Check data quality and correctness.
 
-Practice ETL, data modeling, and SQL development.
+🛠️ Technologies Used
 
-👨‍💻 Author
+SQL Server — Database and data warehouse
 
-Yousef Awwad
+T-SQL — ETL and transformation logic
+
+SSMS — Database development and management
+
+Git & GitHub — Version control and documentation
+
+Draw.io — Architecture and data-model diagrams
+
+📊 Analytics & Reporting
+
+The Gold layer prepares the data for analyzing:
+
+Customer behavior
+
+Product performance
+
+Sales trends
+
+Key business metrics
+
+The final model can be connected to Power BI or other reporting tools to support data-driven decision-making.
+
+🌟 About Me
+
+Hi! I'm Yousef Awwad, a developer interested in data engineering, SQL, and building practical software projects. This project is part of my journey to strengthen my skills in data warehousing and analytics.
+
