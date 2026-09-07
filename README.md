@@ -109,7 +109,7 @@
 <h2>🌟 About Me</h2>
 
 <p>
-  Hi! I'm <strong>Yousef Awwad</strong>, a developer interested in data engineering,
+  Hi! I'm <strong>Yousef Awwad</strong>, a developer interested in Web development and data,
   SQL, and building practical software projects. This project is part of my journey
   to strengthen my skills in data warehousing and analytics.
 </p>
