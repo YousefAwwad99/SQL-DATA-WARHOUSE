@@ -1,86 +1,98 @@
-
 /*
 ===============================================================================
+DDL Script: Create Silver Tables
+===============================================================================
 Script Purpose:
-    Cleans, transforms, and loads data from the Bronze Layer into the
-    Silver Layer.
-
-    The script:
-    - Removes duplicate records and keeps the latest record.
-    - Excludes records with missing primary keys.
-    - Removes unwanted spaces from text fields.
-    - Standardizes categorical values.
-    - Handles missing or invalid values.
-    - Truncates Silver tables before inserting the cleaned data.
-
-Warning:
-    This script performs a full load and deletes the existing data from
-    the Silver Layer tables before reloading them.
+    This script creates tables in the 'silver' schema, dropping existing tables 
+    if they already exist.
+	  Run this script to re-define the DDL structure of 'bronze' Tables
 ===============================================================================
 */
 
--- ============= Customers Taable =================
-	TRUNCATE TABLE silverLayer.crm_cust_info;
+IF OBJECT_ID('silver.crm_cust_info', 'U') IS NOT NULL
+    DROP TABLE silver.crm_cust_info;
+GO
 
-	INSERT INTO silverLayer.crm_cust_info
-	 (cst_id , cst_key , cst_firstname , cst_lastname , cst_marital_status , cst_gndr , cst_create_date)
+CREATE TABLE silver.crm_cust_info (
+    cst_id             INT,
+    cst_key            NVARCHAR(50),
+    cst_firstname      NVARCHAR(50),
+    cst_lastname       NVARCHAR(50),
+    cst_marital_status NVARCHAR(50),
+    cst_gndr           NVARCHAR(50),
+    cst_create_date    DATE,
+    dwh_create_date    DATETIME2 DEFAULT GETDATE()
+);
+GO
 
-	SELECT cst_id,
-	cst_key,
-	cst_firstname,
-	cst_lastname,
-	cst_marital_status,
-	cst_gndr,
-	cst_create_date
-	FROM(
-		SELECT 
-		cst_id,
-		cst_key,
-		TRIM(cst_firstname) AS cst_firstname,
-		TRIM(cst_lastname) AS cst_lastname,
-		CASE WHEN UPPER(TRIM(cst_marital_status)) = 'M' THEN 'Married' 
-			 WHEN UPPER(TRIM(cst_marital_status)) = 'S' THEN 'Single'
-			 ELSE 'n/a' END cst_marital_status,
+IF OBJECT_ID('silver.crm_prd_info', 'U') IS NOT NULL
+    DROP TABLE silver.crm_prd_info;
+GO
 
-			 CASE WHEN UPPER(TRIM(cst_gndr)) = 'M' THEN 'Male' 
-			 WHEN UPPER(TRIM(cst_gndr)) = 'F' THEN 'Female'
-			 ELSE 'n/a' END cst_gndr,
+CREATE TABLE silver.crm_prd_info (
+    prd_id          INT,
+    cat_id          NVARCHAR(50),
+    prd_key         NVARCHAR(50),
+    prd_nm          NVARCHAR(50),
+    prd_cost        INT,
+    prd_line        NVARCHAR(50),
+    prd_start_dt    DATE,
+    prd_end_dt      DATE,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+GO
 
-			 cst_create_date,
-		ROW_NUMBER() OVER(PARTITION BY cst_id ORDER BY cst_create_date DESC) AS [RANK]
-		FROM bronzeLayer.crm_cust_info
-	)T
-	WHERE [RANK] = 1 AND cst_id IS NOT NULL
+IF OBJECT_ID('silver.crm_sales_details', 'U') IS NOT NULL
+    DROP TABLE silver.crm_sales_details;
+GO
 
+CREATE TABLE silver.crm_sales_details (
+    sls_ord_num     NVARCHAR(50),
+    sls_prd_key     NVARCHAR(50),
+    sls_cust_id     INT,
+    sls_order_dt    DATE,
+    sls_ship_dt     DATE,
+    sls_due_dt      DATE,
+    sls_sales       INT,
+    sls_quantity    INT,
+    sls_price       INT,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+GO
 
+IF OBJECT_ID('silver.erp_loc_a101', 'U') IS NOT NULL
+    DROP TABLE silver.erp_loc_a101;
+GO
 
--- ======================= Products Table ======================
+CREATE TABLE silver.erp_loc_a101 (
+    cid             NVARCHAR(50),
+    cntry           NVARCHAR(50),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+GO
 
+IF OBJECT_ID('silver.erp_cust_az12', 'U') IS NOT NULL
+    DROP TABLE silver.erp_cust_az12;
+GO
 
+CREATE TABLE silver.erp_cust_az12 (
+    cid             NVARCHAR(50),
+    bdate           DATE,
+    gen             NVARCHAR(50),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+GO
 
-TRUNCATE TABLE silverLayer.crm_prd_info;
+IF OBJECT_ID('silver.erp_px_cat_g1v2', 'U') IS NOT NULL
+    DROP TABLE silver.erp_px_cat_g1v2;
+GO
 
-INSERT INTO silverLayer.crm_prd_info
-(prd_id , prd_key , prd_key1 , prd_nm , prd_cost ,prd_line, prd_start_dt , prd_end_dt)
+CREATE TABLE silver.erp_px_cat_g1v2 (
+    id              NVARCHAR(50),
+    cat             NVARCHAR(50),
+    subcat          NVARCHAR(50),
+    maintenance     NVARCHAR(50),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+);
+GO
 
-
-SELECT 
-prd_id,
-SUBSTRING(prd_key , 1 , 5) AS  prd_key,
-SUBSTRING(prd_key , 7 , LEN(prd_key)) AS prd_key1,
-prd_nm,
-CASE WHEN prd_cost IS NULL THEN 0 ELSE prd_cost END prd_cost,
-CASE WHEN UPPER(TRIM(prd_line)) = 'M' THEN 'Mountain'
-	 WHEN UPPER(TRIM(prd_line)) = 'S' THEN 'Other Sales'
-	 WHEN UPPER(TRIM(prd_line)) = 'R' THEN 'Road'
-	 WHEN UPPER(TRIM(prd_line)) = 'T' THEN 'Touring'
-	 ELSE 'n/a' END prd_line,
-	 prd_start_dt,
-	 DATEADD(DAY, -1 ,LEAD(prd_start_dt) OVER(PARTITION BY prd_key ORDER BY prd_start_dt)) AS prd_end_dt
-
-FROM bronzeLayer.crm_prd_info
-
-SELECT *
-FROM silverLayer.crm_prd_info
-
-	
