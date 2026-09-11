@@ -98,7 +98,13 @@
 
 <hr>
 
-<h2>🔗 Data Sources &amp; Integration</h2>
+<p align="center">
+  <img
+    src="docs/Data Integration.png"
+    alt="Data Integration Diagram"
+    width="100%"
+  >
+</p>
 
 <p>
   CRM provides the core customer, product, and sales records.
