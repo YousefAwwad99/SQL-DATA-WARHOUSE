@@ -100,7 +100,7 @@
 
 <p align="center">
   <img
-    src="docs/Data Integration.png"
+    src="docs/Data Integration_sql.png"
     alt="Data Integration Diagram"
     width="100%"
   >
