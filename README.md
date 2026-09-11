@@ -59,7 +59,7 @@
 
 <p align="center">
   <img
-    src="Desktop/Data Integration"
+    src="Desktop/Data Integration.png"
     alt="Data Warehouse Architecture"
     width="100%"
   >
