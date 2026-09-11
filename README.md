@@ -29,24 +29,35 @@
 <h2>📌 Project Overview</h2>
 
 <p>
-  This project builds a <strong>SQL Server data warehouse</strong>
-  that combines customer, product, and sales data from
+  This project demonstrates the development of a
+  <strong>SQL Server data warehouse</strong> that combines
+  customer, product, and sales data from
   <strong>CRM and ERP source files</strong>.
 </p>
 
 <p>
-  Data passes through the <strong>Bronze, Silver, and Gold layers</strong>,
-  turning raw source data into a structured model for reporting
-  and business analysis.
+  Data moves through the <strong>Bronze, Silver, and Gold layers</strong>
+  to transform raw records into clean, organized data
+  for reporting and analysis.
 </p>
 
+<h3>Objectives</h3>
+
 <ul>
-  <li>Load data from multiple sources.</li>
-  <li>Clean and standardize customer, product, and sales records.</li>
-  <li>Integrate related CRM and ERP data.</li>
-  <li>Build customer and product dimensions linked to sales facts.</li>
-  <li>Document the architecture, relationships, and column definitions.</li>
+  <li>Collect data from multiple source systems.</li>
+  <li>Clean and standardize raw records.</li>
+  <li>Integrate customer and product information from CRM and ERP.</li>
+  <li>Build a star schema with sales facts and customer and product dimensions.</li>
+  <li>Document the data structure and relationships for other developers.</li>
 </ul>
+
+<p align="center">
+  <img
+    src="docs/DATAWAREHOUSE.png"
+    alt="Data Warehouse Project Overview"
+    width="100%"
+  >
+</p>
 
 <hr>
 
@@ -54,15 +65,7 @@
 
 <p>
   The project follows <strong>Medallion Architecture</strong>,
-  with a separate responsibility for each layer.
-</p>
-
-<p align="center">
-  <img
-    src="C:\Users\DELL\Desktop\sql-data-warehouse-project\docs\data_architecture.png"
-    alt="Data Warehouse Architecture"
-    width="100%"
-  >
+  separating raw data, cleaned data, and business-ready data.
 </p>
 
 <table>
@@ -71,51 +74,50 @@
     <th>Purpose</th>
   </tr>
   <tr>
-    <td><strong>Bronze</strong></td>
-    <td>Stores raw source data before cleaning and transformation.</td>
-  </tr>
-  <tr>
-    <td><strong>Silver</strong></td>
+    <td>🥉 <strong>Bronze</strong></td>
     <td>
-      Cleans and standardizes data, handles missing values,
-      and prepares source records for integration.
+      Stores raw source data before cleaning and transformation.
     </td>
   </tr>
   <tr>
-    <td><strong>Gold</strong></td>
+    <td>🥈 <strong>Silver</strong></td>
     <td>
-      Combines prepared data into customer, product, and sales views
-      organized as a star schema.
+      Cleans and standardizes records, handles missing values,
+      and prepares data for integration.
+    </td>
+  </tr>
+  <tr>
+    <td>🥇 <strong>Gold</strong></td>
+    <td>
+      Combines prepared data into dimension and fact views
+      designed for business analysis.
     </td>
   </tr>
 </table>
 
-<p>
-  📄 <a href="docs/DATAWAREHOUSE.pdf">View Project Overview Diagram</a>
-  <br>
-  📄 <a href="docs/Architichre.pdf">View Detailed Data Architecture</a>
-</p>
-
-<hr>
-
 <p align="center">
   <img
-    src="docs/Data Integration_sql.png"
-    alt="Data Integration Diagram"
+    src="docs/Architichre.png"
+    alt="Bronze, Silver, and Gold Data Architecture"
     width="100%"
   >
 </p>
 
+<hr>
+
+<h2>🔗 Data Sources &amp; Integration</h2>
+
 <p>
-  CRM provides the core customer, product, and sales records.
-  ERP adds customer attributes, location information, and product categories.
+  CRM supplies core customer, product, and sales records.
+  ERP enriches them with additional customer attributes,
+  location information, and product categories.
 </p>
 
 <table>
   <tr>
     <th>Source</th>
     <th>Dataset</th>
-    <th>Role</th>
+    <th>Description</th>
   </tr>
   <tr>
     <td>CRM</td>
@@ -149,8 +151,12 @@
   </tr>
 </table>
 
-<p>
-  📄 <a href="docs/Data%20Integration.pdf">View Data Integration Diagram</a>
+<p align="center">
+  <img
+    src="docs/Data%20Integration_sql.png"
+    alt="CRM and ERP Data Integration"
+    width="100%"
+  >
 </p>
 
 <hr>
@@ -158,41 +164,50 @@
 <h2>⭐ Gold Layer — Data Model</h2>
 
 <p>
-  The Gold layer uses a <strong>Star Schema</strong>.
-  The sales fact view connects to customer and product dimension views
-  through their keys.
+  The Gold layer follows a <strong>Star Schema</strong>.
+  A sales fact view connects to customer and product dimension views
+  through customer and product keys.
 </p>
 
 <table>
   <tr>
     <th>View</th>
     <th>Type</th>
-    <th>Description</th>
+    <th>Purpose</th>
   </tr>
   <tr>
     <td><code>goldLayer.dum_cus</code></td>
     <td>Customer Dimension</td>
     <td>
-      Combines CRM customer information with ERP customer
-      and location attributes.
+      Combines customer information from CRM
+      with ERP customer and location attributes.
     </td>
   </tr>
   <tr>
     <td><code>goldLayer.dum_prd</code></td>
     <td>Product Dimension</td>
     <td>
-      Combines CRM product information with ERP category details.
+      Combines product information from CRM
+      with ERP category details.
     </td>
   </tr>
   <tr>
     <td><code>goldLayer.fct_sls</code></td>
     <td>Sales Fact</td>
     <td>
-      Contains sales line details, dates, quantities, prices,
-      and customer and product keys.
+      Contains sales line details, dates, quantities,
+      prices, and customer and product keys.
     </td>
   </tr>
 </table>
+
+<p align="center">
+  <img
+    src="docs/Data%20model.png"
+    alt="Gold Layer Star Schema Data Model"
+    width="100%"
+  >
+</p>
 
 <h3>Relationships</h3>
 
@@ -217,12 +232,23 @@
 <p>
   One customer or product can appear in multiple sales lines.
   These are logical relationships between the Gold views.
+  An order number may repeat when an order contains multiple products.
+</p>
+
+<hr>
+
+<h2>📖 Data Catalog</h2>
+
+<p>
+  The data catalog describes the Gold views, their columns,
+  data types, and relationships to help team members
+  understand and use the model.
 </p>
 
 <p>
-  📄 <a href="docs/Data%20model.pdf">View Data Model Diagram</a>
-  <br>
-  📖 <a href="docs/data_catalog.md">View Data Catalog and Column Definitions</a>
+  👉 <a href="docs/data_catalog.md">
+    <strong>Explore the Data Catalog</strong>
+  </a>
 </p>
 
 <hr>
@@ -232,15 +258,15 @@
 <ol>
   <li>
     <strong>Load:</strong>
-    Import CRM and ERP source files into Bronze.
+    Import CRM and ERP source files into the Bronze layer.
   </li>
   <li>
     <strong>Clean:</strong>
-    Handle duplicates, missing values, and inconsistent formats in Silver.
+    Handle duplicates, missing values, and inconsistent formats.
   </li>
   <li>
     <strong>Transform:</strong>
-    Standardize values and apply business rules.
+    Standardize values and apply business rules in Silver.
   </li>
   <li>
     <strong>Integrate:</strong>
@@ -252,8 +278,7 @@
   </li>
   <li>
     <strong>Validate:</strong>
-    Check dimension key uniqueness, sales calculations,
-    and missing relationship matches.
+    Check key uniqueness, missing matches, and sales calculations.
   </li>
 </ol>
 
@@ -263,28 +288,28 @@
 
 <table>
   <tr>
-    <th>Tool</th>
+    <th>Technology</th>
     <th>Purpose</th>
   </tr>
   <tr>
-    <td>SQL Server</td>
-    <td>Data storage and warehouse implementation.</td>
+    <td><strong>SQL Server</strong></td>
+    <td>Database and data warehouse implementation.</td>
   </tr>
   <tr>
-    <td>T-SQL</td>
-    <td>Data loading, cleaning, transformation, and validation.</td>
+    <td><strong>T-SQL</strong></td>
+    <td>Data loading, transformation, and validation logic.</td>
   </tr>
   <tr>
-    <td>SQL Server Management Studio</td>
+    <td><strong>SSMS</strong></td>
     <td>Database development and query execution.</td>
   </tr>
   <tr>
-    <td>Draw.io</td>
+    <td><strong>Draw.io</strong></td>
     <td>Architecture, integration, and data-model diagrams.</td>
   </tr>
   <tr>
-    <td>Git &amp; GitHub</td>
-    <td>Source control and project documentation.</td>
+    <td><strong>Git &amp; GitHub</strong></td>
+    <td>Version control and project documentation.</td>
   </tr>
 </table>
 
@@ -297,13 +322,14 @@
 <ul>
   <li>Total sales and units sold.</li>
   <li>Sales trends over time.</li>
-  <li>Customer purchasing activity and sales by country.</li>
+  <li>Customer purchasing activity.</li>
+  <li>Sales by country.</li>
   <li>Product, category, and product-line performance.</li>
 </ul>
 
 <p>
   The model can be connected to <strong>Power BI</strong>
-  or other reporting tools for further analysis.
+  or other reporting tools to build dashboards and explore business metrics.
 </p>
 
 <hr>
@@ -313,6 +339,9 @@
 <p>
   Hi! I'm <strong>Yousef Awwad</strong>, a developer interested in
   web development, SQL, and data.
+</p>
+
+<p>
   This project is part of my learning journey in data warehousing:
   loading raw data, improving its quality, and organizing it
   into a model that others can understand and use.
