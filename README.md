@@ -58,10 +58,11 @@
 </p>
 
 <p align="center">
-  <strong>CRM &amp; ERP Files</strong>
-  ➜ <strong>Bronze</strong>
-  ➜ <strong>Silver</strong>
-  ➜ <strong>Gold</strong>
+  <img
+    src="Desktop/Data Integration"
+    alt="Data Warehouse Architecture"
+    width="100%"
+  >
 </p>
 
 <table>
