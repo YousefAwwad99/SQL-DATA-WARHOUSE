@@ -59,7 +59,7 @@
 
 <p align="center">
   <img
-    src="Desktop/Data Integration.png"
+    src="C:\Users\DELL\Desktop\sql-data-warehouse-project\docs\data_architecture.png"
     alt="Data Warehouse Architecture"
     width="100%"
   >
